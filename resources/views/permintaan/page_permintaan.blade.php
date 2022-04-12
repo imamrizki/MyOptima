@@ -37,7 +37,7 @@
                                 <td><a href="{{ route('input_project') }}">{{ $item->nama_permintaan }} <i class='bx bx-link-external'></i></a></td>
                                 <td>{{ $item->tanggal_permintaan }}</td>
                                 <td><a href="#">0 <i class='bx bx-link-external'></i></a></td>
-                                <td><a href="{{ route('input_project') }}">{{ $item->reff_permintaan }} <i class='bx bx-link-external'></i></a></td>
+                                <td><a href="#">{{ $item->reff_permintaan }} <i class='bx bx-link-external'></i></a></td>
                                 <td>
                                     @php
                                         if ($item->status == 'In Progress') {
