@@ -65,14 +65,14 @@
                 <ul class="menu-inner py-1">
 
                     <!-- Dashboard -->
-                    <li class="menu-item @yield('active')">
-                        <a href="index-2.html" class="menu-link">
+                    <li class="menu-item @yield('permintaan_active')">
+                        <a href="{{ route('page_permintaan') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div >Permintaan</div>
                         </a>
                     </li>
 
-                    <li class="menu-item @yield('active')">
+                    <li class="menu-item @yield('project_active')">
                         <a href="cards-basic.html" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Project</div>
@@ -182,36 +182,16 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
-
-                    <!-- Content -->
-
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        
+
+                        <!-- Content -->
+
                         @yield('content')
-
+                        
+                        <!-- / Content -->
+                        
+                        <div class="content-backdrop fade"></div>
                     </div>
-                    <!-- / Content -->
-                    
-
-                    <!-- Footer -->
-                    <footer class="content-footer footer bg-footer-theme">
-                        <div
-                            class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-                            <div class="mb-2 mb-md-0">
-                                Copyright ©
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </footer>
-                    <!-- / Footer -->
-
-
-                    <div class="content-backdrop fade"></div>
                 </div>
                 <!-- Content wrapper -->
             </div>
