@@ -19,6 +19,12 @@ class Permintaan extends Model
         'keterangan', 
         'add_by', 
         'edit_by', 
-        'status'
+        'status',
+        'status_nodin'
     ];
+
+    public function tematik()
+    {
+        return $this->belongsTo(Tematik::class);
+    }
 }

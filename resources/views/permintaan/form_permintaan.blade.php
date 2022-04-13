@@ -23,10 +23,28 @@
                             <div class="col-md-9">
                                 <select name="tematik_perm" class="form-select">
                                     <option selected disabled>Pilih Tematik</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($tematik as $item)
+                                        <option value="{{ $item->id }}">{{ $item->tematik }}</option>
+                                    @endforeach
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row">
+                            <label for="html5-text-input" class="col-md-3 col-form-label">Status Nota Dinas</label>
+                            <div class="col-md-9">
+                                <div class="form-check form-check-inline">
+                                    <input name="nodin" class="form-check-input" type="radio" value="Nodin" id="radio1">
+                                    <label class="form-check-label" for="nodin_1">
+                                      Nodin
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input name="nodin" class="form-check-input" type="radio" value="Non-Nodin" id="radio2">
+                                    <label class="form-check-label" for="nodin_2">
+                                      Non-Nodin
+                                    </label>
+                                </div>
                             </div>
                         </div>
     

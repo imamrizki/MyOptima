@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Authentication\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PermintaanController;
 
 Route::group(['middleware' => 'auth'], function(){
@@ -17,3 +18,4 @@ Route::prefix('auth')->name('auth.')->group(function (){
     Route::post('/login-post', [AuthController::class, 'login'])->name('login-post');
 });
 
+Route::get('/project', [ProjectController::class, 'inputProject'])->name('input_project');

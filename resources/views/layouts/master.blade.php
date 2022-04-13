@@ -67,15 +67,15 @@
                     <!-- Dashboard -->
                     <li class="menu-item @yield('permintaan_active')">
                         <a href="{{ route('page_permintaan') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div >Permintaan</div>
+                            <i class="menu-icon tf-icons bx bx-notepad"></i>
+                            <div>Permintaan</div>
                         </a>
                     </li>
 
                     <li class="menu-item @yield('project_active')">
-                        <a href="cards-basic.html" class="menu-link">
+                        <a href="{{ route('input_project') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
-                            <div data-i18n="Basic">Project</div>
+                            <div>Project (LOP)</div>
                         </a>
                     </li>
 

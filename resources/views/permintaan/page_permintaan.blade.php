@@ -24,7 +24,7 @@
                         <th>Tematik</th>
                         <th>Nama Permintaan</th>
                         <th>Tanggal Permintaan</th>
-                        <th>LOP</th>
+                        <th>Project (LOP)</th>
                         <th>Reff</th>
                         <th>Status</th>
                     </tr>
@@ -33,11 +33,11 @@
                     @if (count($permintaan) > 0)
                         @foreach ($permintaan as $item)
                             <tr>
-                                <td>Tematik</td>
-                                <td>{{ $item->nama_permintaan }}</td>
+                                <td>{{ $item->tematik->tematik }}</td>
+                                <td><a href="{{ route('input_project') }}">{{ $item->nama_permintaan }} <i class='bx bx-link-external'></i></a></td>
                                 <td>{{ $item->tanggal_permintaan }}</td>
-                                <td>0</td>
-                                <td>{{ $item->reff_permintaan }}</td>
+                                <td><a href="#">0 <i class='bx bx-link-external'></i></a></td>
+                                <td><a href="#">{{ $item->reff_permintaan }} <i class='bx bx-link-external'></i></a></td>
                                 <td>
                                     @php
                                         if ($item->status == 'In Progress') {

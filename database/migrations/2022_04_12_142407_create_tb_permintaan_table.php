@@ -24,6 +24,7 @@ class CreateTbPermintaanTable extends Migration
             $table->integer('add_by');
             $table->integer('edit_by');
             $table->string('status', 100);
+            $table->string('status_nodin', 100);
             $table->timestamps();
         });
     }

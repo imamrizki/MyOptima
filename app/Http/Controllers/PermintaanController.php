@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tematik;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
 
@@ -9,14 +10,17 @@ class PermintaanController extends Controller
 {
     public function pagePermintaan()
     {
-        $permintaan = Permintaan::all();
+        $permintaan = Permintaan::with(['tematik'])->get();
+        // dd($permintaan);
         
         return view('permintaan.page_permintaan', compact('permintaan'));
     }
 
     public function inputPermintaan()
     {
-        return view('permintaan.form_permintaan');
+        $tematik = Tematik::all();
+
+        return view('permintaan.form_permintaan', compact('tematik'));
     }
 
     public function simpanPermintaan(Request $request)
@@ -37,6 +41,7 @@ class PermintaanController extends Controller
             'add_by' => 1, // diisi setelah ada role
             'edit_by' => 1, // diisi setelah ada role
             'status' => 'Order',
+            'status_nodin' => $request->nodin,
         ]);
    
         return redirect('/')->with('success', 'Permintaan berhasil disimpan');
