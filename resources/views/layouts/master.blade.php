@@ -65,19 +65,21 @@
                 <ul class="menu-inner py-1">
 
                     <!-- Dashboard -->
+                    @role(['admin', 'hero'])
                     <li class="menu-item @yield('permintaan_active')">
                         <a href="{{ route('page_permintaan') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-notepad"></i>
                             <div>Permintaan</div>
                         </a>
                     </li>
-
+                    
                     <li class="menu-item @yield('project_active')">
                         <a href="{{ route('input_project') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div>Project (LOP)</div>
                         </a>
                     </li>
+                    @endrole
 
                 </ul>
 
@@ -107,7 +109,7 @@
                                 <a class="github-button"
                                     href="https://github.com/themeselection/sneat-html-admin-template-free"
                                     data-icon="octicon-star" data-size="large" data-show-count="true"
-                                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">Admin</a>
+                                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub">{{ Auth::user()->name }}</a>
                             </li>
 
                             <!-- User -->
@@ -129,8 +131,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span class="fw-semibold d-block">{{ Auth::user()->name }}</span>
+                                                    @foreach (Auth::user()->getRoles() as $role )
+                                                        <small class="text-muted">{{ $role }}</small>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                         </a>

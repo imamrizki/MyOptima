@@ -27,6 +27,12 @@ class UserSeeder extends Seeder
             'description' => ''
         ]);
 
+        $hero = Role::create([
+            'name' => 'hero',
+            'display_name' => 'Hero',
+            'description' => ''
+        ]);
+
         $optima = Role::create([
             'name' => 'optima',
             'display_name' => 'Optima',
@@ -52,6 +58,14 @@ class UserSeeder extends Seeder
         ]);
 
         $user->attachRole($admin);
+
+        $user = User::create([
+            'name'      => 'Hero',
+            'email'     => 'hero@myoptima',
+            'password'  => bcrypt('hero'),
+        ]);
+
+        $user->attachRole($hero);
 
         $user = User::create([
             'name'      => 'Optima',
