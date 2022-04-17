@@ -10,7 +10,7 @@ class PermintaanController extends Controller
 {
     public function pagePermintaan()
     {
-        $permintaan = Permintaan::with(['tematik'])->get();
+        $permintaan = Permintaan::with(['tematik'])->paginate(10);
         // dd($permintaan);
         
         return view('permintaan.page_permintaan', compact('permintaan'));
@@ -45,5 +45,12 @@ class PermintaanController extends Controller
         ]);
    
         return redirect('/')->with('success', 'Permintaan berhasil disimpan');
+    }
+
+    public function getDataProject(Request $request)
+    {
+        $permintaan = Permintaan::where('id', $request->id_permintaan)->first();
+        
+        return response()->json($permintaan, 200);
     }
 }

@@ -59,6 +59,10 @@
                     @endif
                 </tbody>
             </table>
+
+            <div class="d-inline text-center">
+                {!! $permintaan->links('vendor.pagination.bootstrap-4') !!}
+            </div>
         </div>
     </div>
     <!--/ Basic Bootstrap Table -->
