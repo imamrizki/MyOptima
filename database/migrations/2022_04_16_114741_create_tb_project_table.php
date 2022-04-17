@@ -25,6 +25,7 @@ class CreateTbProjectTable extends Migration
             $table->string('keterangan', 100)->nullable();
             $table->integer('add_by');
             $table->integer('edit_by');
+            $table->string('status', 100);
             $table->timestamps();
         });
     }

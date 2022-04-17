@@ -34,7 +34,10 @@
                         @foreach ($permintaan as $item)
                             <tr>
                                 <td>{{ $item->tematik->tematik }}</td>
-                                <td><a href="{{ route('input_project') }}">{{ $item->nama_permintaan }} <i class='bx bx-link-external'></i></a></td>
+                                <td><a href="{{ route('input_project') }}">
+                                    {{ $item->nama_permintaan }} <i class='bx bx-link-external'></i></a> <br>
+                                    Type : {{ $item->status_nodin }}
+                                </td>
                                 <td>{{ $item->tanggal_permintaan }}</td>
                                 <td><a href="#">0 <i class='bx bx-link-external'></i></a></td>
                                 <td><a href="#">{{ $item->reff_permintaan }} <i class='bx bx-link-external'></i></a></td>

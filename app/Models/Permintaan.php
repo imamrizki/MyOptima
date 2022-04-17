@@ -27,4 +27,9 @@ class Permintaan extends Model
     {
         return $this->belongsTo(Tematik::class);
     }
+
+    public function project()
+    {
+        return $this->hasMany(Project::class, Permintaan::class);
+    }
 }
