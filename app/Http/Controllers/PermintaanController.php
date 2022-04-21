@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Project;
 use App\Models\Tematik;
 use App\Models\Permintaan;
@@ -13,9 +14,9 @@ class PermintaanController extends Controller
     public function pagePermintaan()
     {
         $permintaan = Permintaan::with(['tematik'])->paginate(10);
-        // dd($permintaan);
-        
-        return view('permintaan.page_permintaan', compact('permintaan'));
+        $lop = Project::with(['permintaan'])->get();
+
+        return view('permintaan.page_permintaan', compact('permintaan', 'lop'));
     }
 
     public function inputPermintaan()
@@ -67,7 +68,7 @@ class PermintaanController extends Controller
                                         Status RAB : 
                                     </p>
                                     <div class="demo-inline mb-3">
-                                        <button type="button" class="btn btn-sm btn-outline-info">
+                                        <button type="button" data-id="'.$value->id.'" class="btn btn-sm btn-outline-info update" data-bs-toggle="modal" data-bs-target=".backDropModal">
                                             <i class="bx bx-edit"></i>&nbsp; Update
                                         </button>
                                         <button type="button" class="btn btn-sm btn-outline-success">

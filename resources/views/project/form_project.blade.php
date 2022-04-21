@@ -116,76 +116,88 @@
             <div class="card mb-4">
                 <h5 class="card-header">List Of Project (LOP)</h5>
                 <div class="card-body">
-                    {{-- <div class="mb-3 row">
-                        <div class="col-md-12">
-                            <select class="form-select" id="filter_permintaan">
-                                <option value="" selected disabled>Filter Permintaan</option>
-                                @foreach ($permintaan as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama_permintaan }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div> --}}
 
                     <div id="component_lop">
-                        {{-- @foreach ($lop as $item)
-                            <div class="card shadow-none bg-transparent border border-info mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $item->nama_project }}</h5>
-                                    <p class="card-text">
-                                        Status LOP : {{ $item->status }} <br>
-                                        Status RAB : 
-                                    </p>
-                                    <div class="demo-inline mb-3">
-                                        <button type="button" class="btn btn-sm btn-outline-info">
-                                            <i class='bx bx-edit' ></i>&nbsp; Update
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-success">
-                                            <i class='bx bx-dollar-circle'></i>&nbsp; Rab
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger">
-                                            <i class='bx bxs-timer'></i>&nbsp; Progress
-                                        </button>
-                                    </div>
-                                    <h6 style="margin-bottom: 0;">{{ $item->created_at }}</h6>
-                                </div>
-                            </div>
-                        @endforeach --}}
+
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade backDropModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content" action="{{ route('update_project') }}" method="POST">
+                @csrf
+                <input type="hidden" name="id_project" id="id_project">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="backDropModalTitle">Update LOP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col mb-3">
+                            <label for="nameBackdrop" class="form-label">Pilih Mitra</label>
+                            <select name="permintaan_id" class="form-select" id="permintaan_id">
+                                <option value="" selected disabled>Pilih Mitra</option>
+                                @foreach ($mitra as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
 
-        var permintaan = document.getElementById('permintaan_id');
+        $(document).ready(function(){
 
-        if (permintaan.value === '') {
-            document.getElementById('component_lop').innerHTML = `<div class="text-left">Melihat LOP pilih permintaan terlebih dahulu !</div>`;
-        }
+            var permintaan = document.getElementById('permintaan_id');
+            var updateButton = document.getElementById('button');
 
-        permintaan.addEventListener('change', () => {
+            if (permintaan.value === '') {
+                document.getElementById('component_lop').innerHTML = `<div class="text-left">Melihat LOP pilih permintaan terlebih dahulu !</div>`;
+            }
 
-            axios.get('http://myoptima.local/get-permintaan', {
-                    params: {
-                        id_permintaan: permintaan.value
-                    }
-                })
-                .then(function (response) {
-                    document.getElementById('tanggal_permintaan').value = response.data.permintaan.tanggal_permintaan;
-                    document.getElementById('component_lop').innerHTML = response.data.component_lop;
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-                .then(function () {
-                    // always executed
-                });
+            permintaan.addEventListener('change', () => {
+
+                axios.get('http://myoptima.local/get-permintaan', {
+                        params: {
+                            id_permintaan: permintaan.value
+                        }
+                    })
+                    .then(function (response) {
+                        document.getElementById('tanggal_permintaan').value = response.data.permintaan.tanggal_permintaan;
+                        document.getElementById('component_lop').innerHTML = response.data.component_lop;
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                    .then(function () {
+                        // always executed
+                    });
+
+            });
+
+            $(document).on('click', 'button.update', function () {
+
+                $('#id_project').val($(this).attr('data-id'));
+
+            });
 
         });
+
 
     </script>
 @endsection

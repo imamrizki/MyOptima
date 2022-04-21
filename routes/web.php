@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/project', [ProjectController::class, 'inputProject'])->name('input_project');
     Route::post('/simpan-project', [ProjectController::class, 'simpanProject'])->name('simpan_project');
+    Route::post('/update-project', [ProjectController::class, 'updateProject'])->name('update_project');
     
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout'); // logout
 });

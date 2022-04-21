@@ -31,7 +31,10 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @if (count($permintaan) > 0)
-                        @foreach ($permintaan as $item)
+                        @foreach ($permintaan as $key => $item)
+                            @php
+                                $lop = App\Models\Project::where('permintaan_id', $item->id)->count();
+                            @endphp
                             <tr>
                                 <td>{{ $item->tematik->tematik }}</td>
                                 <td><a href="{{ route('input_project') }}">
@@ -39,7 +42,7 @@
                                     Type : {{ $item->status_nodin }}
                                 </td>
                                 <td>{{ $item->tanggal_permintaan }}</td>
-                                <td><a href="#">0 <i class='bx bx-link-external'></i></a></td>
+                                <td><a href="#">{{ $lop }} <i class='bx bx-link-external'></i></a></td>
                                 <td><a href="#">{{ $item->reff_permintaan }} <i class='bx bx-link-external'></i></a></td>
                                 <td>
                                     @php
