@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Rab;
 use App\Models\Sto;
 use App\Models\User;
 use App\Models\Project;
@@ -65,6 +67,38 @@ class ProjectController extends Controller
         ]);
 
         return redirect('/project')->with('success', 'Project berhasil diupdate');
+    }
+
+    public function getProject(Request $request)
+    {
+        $data = Project::with('permintaan', 'sto')->where('id', $request->id_project)->first();
+
+        return response()->json(['project' => $data, 'permintaan' => $data->permintaan, 'sto' => $data->sto], 200);
+    }
+
+    public function simpanRab(Request $request)
+    {
+        $rab = Rab::create([
+            'project_id' => $request->id_project,
+            'biaya' => $request->rab_ondesk,
+            'dt_target' => Carbon::now()->format('Y-m-d'),
+            'add_by' => Auth::id(),
+            'edit_by' => Auth::id(), 
+            'status' => 'RAB OnDesk', // Belum Diserahkan, Dikerjakan, Selesai
+            'keterangan' => $request->ket_1,
+        ]);
+
+        $permintaan = Project::where('id', $request->id_project)->first();
+
+        $project = Project::where('id', $request->id_project)->update([
+            'status' => 'Dikerjakan', // Belum Diserahkan, Dikerjakan, Selesai
+        ]);
+
+        $permintaan = Permintaan::where('id', $permintaan->permintaan_id)->update([
+            'status' => 'In Progress', // Order, In Progress, Close
+        ]);
+
+        return redirect('/project')->with('success', 'RAB Berhasil Diinput');
     }
 
 }

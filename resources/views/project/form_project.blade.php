@@ -126,13 +126,13 @@
         </div>
     </div>
 
-    <div class="modal fade backDropModal" data-bs-backdrop="static" tabindex="-1">
+    <div class="modal fade updateModal" data-bs-backdrop="static" tabindex="-1">
         <div class="modal-dialog">
             <form class="modal-content" action="{{ route('update_project') }}" method="POST">
                 @csrf
-                <input type="hidden" name="id_project" id="id_project">
+                <input type="hidden" name="id_project" id="id_project_1">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="backDropModalTitle">Update LOP</h5>
+                    <h5 class="modal-title">Update LOP</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -145,6 +145,73 @@
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade rabModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <form class="modal-content" action="{{ route('simpan_rab') }}" method="POST">
+                @csrf
+                <input type="hidden" name="id_project" id="id_project_2">
+                <div class="modal-header">
+                    <h5 class="modal-title">Input RAB</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">Tanggal Permintaan</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="tanggal_permintaan" id="tanggal_permintaan_1" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">Nama Permintaan</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="nama_permintaan" id="nama_permintaan_1" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">Nama Project</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="nama_project" id="nama_project_1" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">STO</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="sto" id="sto" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">Tikor LOP</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="tikor_lop" id="tikor_lop_1" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">Lokasi LOP</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="text" name="lokasi_lop_1" id="lokasi_lop_1" disabled>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-date-input" class="col-md-3 col-form-label">RAB Ondesk (Rp)</label>
+                        <div class="col-md-9">
+                            <input class="form-control" type="number" name="rab_ondesk" placeholder="2.000.000" id="rab_ondesk">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-text-input" class="col-md-3 col-form-label">Keterangan</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control" name="ket_1" rows="3"></textarea>
                         </div>
                     </div>
                 </div>
@@ -192,7 +259,37 @@
 
             $(document).on('click', 'button.update', function () {
 
-                $('#id_project').val($(this).attr('data-id'));
+                console.log($(this).attr('data-id'));
+                $('#id_project_1').val($(this).attr('data-id'));
+
+            });
+
+            $(document).on('click', 'button.rab', function () {
+
+                var project_id = $(this).attr('data-id');
+
+                $('#id_project_2').val(project_id);
+
+                axios.get('http://myoptima.local/get-project', {
+                        params: {
+                            id_project: project_id
+                        }
+                    })
+                    .then(function (response) {
+                        document.getElementById('tanggal_permintaan_1').value = response.data.permintaan.tanggal_permintaan;
+                        document.getElementById('nama_permintaan_1').value = response.data.permintaan.nama_permintaan;
+                        document.getElementById('nama_project_1').value = response.data.project.nama_project;
+                        document.getElementById('sto').value = response.data.sto.nama_sto;
+                        document.getElementById('tikor_lop_1').value = response.data.project.tikor_lop;
+                        document.getElementById('lokasi_lop_1').value = response.data.project.lokasi_lop;
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                    .then(function () {
+                        // always executed
+                    });
 
             });
 

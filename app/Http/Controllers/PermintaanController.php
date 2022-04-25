@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rab;
 use App\Models\User;
 use App\Models\Project;
 use App\Models\Tematik;
@@ -55,23 +56,25 @@ class PermintaanController extends Controller
         $permintaan = Permintaan::where('id', $request->id_permintaan)->first();
 
         $lop = Project::where('permintaan_id', $request->id_permintaan)->get();
-
+        
         $component_lop = '';
-
+        
         if (count($lop) > 0) {
             foreach ($lop as $key => $value) {
+                $rab = Rab::where('project_id', $value->id)->first();
+
                 $component_lop .= '<div class="card shadow-none bg-transparent border border-info mb-3">
                                 <div class="card-body">
                                     <h5 class="card-title">'.$value->nama_project.'</h5>
                                     <p class="card-text">
-                                        Status LOP :  '.$value->status.'<br>
-                                        Status RAB : 
+                                        Status LOP : '.$value->status.'<br>
+                                        Status RAB : '.($rab == null ? '<i>Belum Diinput</i>' : $rab->status).'
                                     </p>
                                     <div class="demo-inline mb-3">
-                                        <button type="button" data-id="'.$value->id.'" class="btn btn-sm btn-outline-info update" data-bs-toggle="modal" data-bs-target=".backDropModal">
+                                        <button type="button" data-id="'.$value->id.'" class="btn btn-sm btn-outline-info update" data-bs-toggle="modal" data-bs-target=".updateModal">
                                             <i class="bx bx-edit"></i>&nbsp; Update
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-outline-success">
+                                        <button type="button" data-id="'.$value->id.'" class="btn btn-sm btn-outline-success rab" data-bs-toggle="modal" data-bs-target=".rabModal">
                                             <i class="bx bx-dollar-circle"></i>&nbsp; Rab
                                         </button>
                                         <button type="button" class="btn btn-sm btn-outline-danger">

@@ -28,4 +28,10 @@ class Project extends Model
     {
         return $this->belongsTo(Permintaan::class);
     }
+
+    public function sto()
+    {
+        return $this->belongsTo(Sto::class);
+    }
+
 }
