@@ -77,8 +77,8 @@ class PermintaanController extends Controller
                                         <button type="button" data-id="'.$value->id.'" class="btn btn-sm btn-outline-success rab" data-bs-toggle="modal" data-bs-target=".rabModal">
                                             <i class="bx bx-dollar-circle"></i>&nbsp; Rab
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger">
-                                            <i class="bx bxs-timer"></i>&nbsp; Progress
+                                        <button type="button" data-id="'.$value->id.'" class="btn btn-sm btn-outline-danger btnProgress" data-bs-toggle="modal" data-bs-target=".progressModal">
+                                            <i class="bx bx-timer"></i>&nbsp; Progress
                                         </button>
                                     </div>
                                     <h6 style="margin-bottom: 0;">'.$value->created_at.'</h6>

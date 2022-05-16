@@ -14,6 +14,8 @@ class Project extends Model
         'permintaan_id', 
         'tematik_id', 
         'sto_id', 
+        'mitra_id', 
+        'progress_id', 
         'nama_project', 
         'estimasi_rab', 
         'tikor_lop', 

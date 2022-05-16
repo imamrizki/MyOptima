@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\Tematik;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
@@ -22,13 +23,15 @@ class ProjectController extends Controller
 
         $lop = Project::with(['permintaan'])->get();
 
+        $progress = DB::table('tb_progress')->get();
+
         $mitra = User::whereHas(
             'roles', function($q){
                 $q->where('name', 'Mitra');
             }
         )->get();
 
-        return view('project.form_project', compact('permintaan', 'sto', 'tematik', 'lop', 'mitra'));
+        return view('project.form_project', compact('permintaan', 'sto', 'tematik', 'lop', 'mitra', 'progress'));
     }
 
     public function simpanProject(Request $request)
@@ -61,6 +64,7 @@ class ProjectController extends Controller
             // 'tikor_lop' => $request->tikor_lop,
             // 'lokasi_lop' => $request->lokasi_lop,
             // 'keterangan' => $request->keterangan,
+            'mitra_id' => $request->mitra_id,
             'add_by' => Auth::id(),
             'edit_by' => Auth::id(), 
             'status' => 'Diserahkan', // Belum Diserahkan, Dikerjakan, Selesai

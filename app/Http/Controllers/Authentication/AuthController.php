@@ -22,8 +22,13 @@ class AuthController extends Controller
         ]);
 
         if(Auth::attempt($credentials, $request->remember)) {
+            // dd(Auth::user()->hasRole('mitra'));
             $request->session()->regenerate();
  
+            if (Auth::user()->hasRole('mitra')) {
+                return redirect()->route('page_mitra');
+            }
+
             return redirect()->intended(RouteServiceProvider::HOME);
         }
         return back()->withErrors([

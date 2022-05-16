@@ -3,6 +3,41 @@
 @section('project_active', 'active')
 
 @section('content')
+<style>
+    ul.timeline {
+        list-style-type: none;
+        position: relative;
+    }
+    ul.timeline:before {
+        content: ' ';
+        background: #d4d9df;
+        display: inline-block;
+        position: absolute;
+        left: 29px;
+        width: 2px;
+        height: 100%;
+        z-index: 400;
+    }
+    ul.timeline > li {
+        margin: 20px 0;
+        padding-left: 20px;
+    }
+    ul.timeline > li:before {
+        content: ' ';
+        background: white;
+        display: inline-block;
+        position: absolute;
+        border-radius: 50%;
+        border: 3px solid #d4d9df;
+        left: 20px;
+        width: 20px;
+        height: 20px;
+        z-index: 400;
+    }
+    ul.timeline > li.active:before {
+        border: 3px solid #e6381a;
+    }
+</style>
         
     <div class="row">
         <div class="col-md-8">
@@ -139,7 +174,7 @@
                     <div class="row">
                         <div class="col mb-3">
                             <label for="nameBackdrop" class="form-label">Pilih Mitra</label>
-                            <select name="permintaan_id" class="form-select" id="permintaan_id">
+                            <select name="mitra_id" class="form-select" id="permintaan_id">
                                 <option value="" selected disabled>Pilih Mitra</option>
                                 @foreach ($mitra as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -222,6 +257,33 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade progressModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog">
+            <form class="modal-content" action="" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title">Progress LOP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="timeline">
+                                @foreach ($progress as $item)
+                                    <li id="level_{{ $item->id }}">
+                                        <p>{{ $item->level }}</p>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -238,7 +300,7 @@
 
             permintaan.addEventListener('change', () => {
 
-                axios.get('http://myoptima.local/get-permintaan', {
+                axios.get('http://localhost:8000/get-permintaan', {
                         params: {
                             id_permintaan: permintaan.value
                         }
@@ -259,7 +321,6 @@
 
             $(document).on('click', 'button.update', function () {
 
-                console.log($(this).attr('data-id'));
                 $('#id_project_1').val($(this).attr('data-id'));
 
             });
@@ -270,12 +331,13 @@
 
                 $('#id_project_2').val(project_id);
 
-                axios.get('http://myoptima.local/get-project', {
+                axios.get('http://localhost:8000/get-project', {
                         params: {
                             id_project: project_id
                         }
                     })
                     .then(function (response) {
+                        console.log(response.data);
                         document.getElementById('tanggal_permintaan_1').value = response.data.permintaan.tanggal_permintaan;
                         document.getElementById('nama_permintaan_1').value = response.data.permintaan.nama_permintaan;
                         document.getElementById('nama_project_1').value = response.data.project.nama_project;
@@ -290,6 +352,31 @@
                     .then(function () {
                         // always executed
                     });
+
+            });
+
+            $(document).on('click', 'button.btnProgress', function () {
+
+                var project_id = $(this).attr('data-id');
+
+                $('#id_project_2').val(project_id);
+
+                axios.get('http://localhost:8000/get-project', {
+                    params: {
+                        id_project: project_id
+                    }
+                })
+                .then(function (response) {
+                    if (response.data.project.progress_id !== 0) {
+                        $("#level_"+response.data.project.progress_id).addClass('active');
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
 
             });
 
