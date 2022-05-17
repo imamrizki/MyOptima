@@ -48,8 +48,8 @@
                                     @php
                                         if ($item->status == 'In Progress') {
                                             $color = 'bg-danger'; // In Progress
-                                        } else if($item->status == 'Close') {
-                                            $color = 'bg-success'; // Close
+                                        } else if($item->status == 'Selesai') {
+                                            $color = 'bg-success'; // Selesai
                                         } else {
                                             $color = 'bg-warning'; // Order
                                         }

@@ -57,6 +57,7 @@
                 @foreach ($lop as $value)
                     @php
                         $rab = App\Models\Rab::where('project_id', $value->id)->first();
+                        $permintaan = App\Models\Permintaan::where('id', $value->permintaan_id)->first();
                     @endphp
 
                     <div class="card shadow-none bg-transparent border border-info mb-3">
@@ -72,7 +73,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="demo-inline mb-3">
-                                        <button type="button" data-id="{{ $value->id }}" class="btn btn-sm btn-outline-info update" data-bs-toggle="modal" data-bs-target=".updateModal">
+                                        <button type="button" data-id="{{ $value->id }}" data-permintaan="{{ $value->permintaan_id }}" class="btn btn-sm btn-outline-info update" data-bs-toggle="modal" data-bs-target=".updateModal">
                                             <i class="bx bx-edit"></i>&nbsp; Update
                                         </button>
                                         <button type="button" data-id="{{ $value->id }}" class="btn btn-sm btn-outline-success rab" data-bs-toggle="modal" data-bs-target=".rabModal">
@@ -98,6 +99,7 @@
             <form class="modal-content" action="{{ route('update_progress') }}" method="POST">
                 @csrf
                 <input type="hidden" name="id_project" id="id_project">
+                <input type="hidden" name="id_permintaan" id="id_permintaan">
                 <div class="modal-header">
                     <h5 class="modal-title">Update Progress LOP</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -157,6 +159,7 @@
 
             $(document).on('click', 'button.update', function () {
                 $('#id_project').val($(this).attr('data-id'));
+                $('#id_permintaan').val($(this).attr('data-permintaan'));
             });
             
             $(document).on('click', 'button.btnProgress', function () {
@@ -171,6 +174,7 @@
                         }
                     })
                     .then(function (response) {
+                        console.log(response.data)
                         if (response.data.project.progress_id !== 0) {
                             $("#level_"+response.data.project.progress_id).addClass('active');
                         }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rab;
 use App\Models\Project;
+use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +36,11 @@ class MitraController extends Controller
             'progress_id' => $request->progress_id,
             'edit_by' => Auth::id(), 
             'status' => $statusLop, // Belum Diserahkan, Dikerjakan, Selesai
+        ]);
+
+        $permintaan = Permintaan::where('id', $request->id_permintaan)->update([
+            'edit_by' => Auth::id(), 
+            'status' => $statusLop, // Order, In Progress, Selesai
         ]);
 
         return redirect('/mitra')->with('success', 'Progress berhasil diupdate');
